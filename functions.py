@@ -1,6 +1,5 @@
 import time
 import random
-from typing import Optional
 from storage import Users, Transactions, Blocks
 from classes import User, TransactionTuple, BlockTuple
 
@@ -9,7 +8,7 @@ def create_user(username: str, balance: float = 0.0) -> User:
     Users.append(user)
     return user
 
-def add_transaction(sender: User, receiver: User, amount: float, energy_rate: float = 0.0) -> Optional[TransactionTuple]:
+def add_transaction(sender: User, receiver: User, amount: float, energy_rate: float = 0.0):
     if sender.balance < amount:
         return None
     
@@ -51,10 +50,3 @@ def select_committee(users, stakes, committee_size):
             idx = users.index(user)
             stakes_copy[idx] = 0  # Prevent reselection
     return list(selected)
-
-# Divide users into shards
-def shard_users(users, num_shards):
-    shards = [[] for _ in range(num_shards)]
-    for i, user in enumerate(users):
-        shards[i % num_shards].append(user)
-    return shards
